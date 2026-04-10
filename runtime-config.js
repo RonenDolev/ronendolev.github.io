@@ -1,0 +1,1 @@
+﻿window.WORDGAMES_API_BASE = '';
