@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --text: #1b1f3b;
   --line: #334155;
   --line-soft: rgba(51, 65, 85, 0.22);
@@ -114,9 +114,12 @@ h4 { margin: 0 0 10px; font-size: 20px; }
 .word-bank-wrap h3 { margin-bottom: 12px; }
 .word-bank { display: flex; flex-wrap: wrap; gap: 10px; }
 .word-chip {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff;
-  min-width: 86px; user-select: none;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  color: #111827;
 }
 .word-chip.found { background: #dcfce7; border-color: #16a34a; text-decoration: line-through; }
 
@@ -252,11 +255,13 @@ h4 { margin: 0 0 10px; font-size: 20px; }
   .crossword-cell input { color: #000 !important; }
   .flag-question-image { border-color: #000 !important; background: #fff !important; }
   .quiz-item, .option-row, .key-chip, .word-chip {
-    background: #fff !important;
-    border-color: #000 !important;
-    color: #000 !important;
-    box-shadow: none !important;
-  }
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  color: #111827;
+}
 }
 
 .solution-line { margin-top: 10px; font-weight: 700; color: #b91c1c; }
@@ -279,3 +284,4 @@ h4 { margin: 0 0 10px; font-size: 20px; }
 .option-row span {
   flex: 1;
 }
+
