@@ -285,3 +285,11 @@ h4 { margin: 0 0 10px; font-size: 20px; }
   flex: 1;
 }
 
+
+.word-bank .word-chip,
+#wordSearchWordBank .word-chip,
+button.word-chip {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  text-shadow: none !important;
+}
