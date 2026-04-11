@@ -1,1 +1,1 @@
-﻿window.WORDGAMES_API_BASE = '';
+window.WORDGAMES_API_BASE = 'https://wordgames-api.vitaro.xyz';
