@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   var backendMessage = "תכונות שרת או AI אינן זמינות כרגע בגרסת GitHub Pages. ניתן להשתמש בממשק ובתוכן הסטטי, אך פעולות שדורשות backend אינן זמינות כאן.";
   window.WordGamesAIBackendAvailable = false;
   window.WordGamesAIFallbackMessage = backendMessage;
@@ -11,11 +11,21 @@
       else raw = String(input || "");
 
       if (!raw) return false;
-      if (raw.indexOf("/api/") !== -1) return true;
+
+      if (/^https?:\/\//i.test(raw)) {
+        try {
+          var absoluteUrl = new URL(raw);
+          return absoluteUrl.origin === window.location.origin && absoluteUrl.pathname.indexOf("/api/") === 0;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      if (raw.indexOf("/api/") === 0) return true;
 
       try {
         var u = new URL(raw, window.location.origin);
-        return u.pathname.indexOf("/api/") === 0;
+        return u.origin === window.location.origin && u.pathname.indexOf("/api/") === 0;
       } catch (e) {
         return false;
       }
@@ -35,11 +45,11 @@
   }
 
   var originalFetch = window.fetch ? window.fetch.bind(window) : null;
+
   if (originalFetch) {
     window.fetch = function (input, init) {
       if (isApiRequest(input)) {
         var payload = fallbackPayload(typeof input === "string" ? input : (input && input.url) || "");
-        window.dispatchEvent(new CustomEvent("wordgamesai:backend-required", { detail: payload }));
         return Promise.resolve(
           new Response(JSON.stringify(payload), {
             status: 503,
@@ -68,12 +78,11 @@
       xhr.send = function () {
         if (xhr.__isApiFallback) {
           var payload = JSON.stringify(fallbackPayload(blockedUrl));
-          window.dispatchEvent(new CustomEvent("wordgamesai:backend-required", { detail: JSON.parse(payload) }));
           setTimeout(function () {
-            Object.defineProperty(xhr, "readyState",  { configurable: true, value: 4 });
-            Object.defineProperty(xhr, "status",      { configurable: true, value: 503 });
-            Object.defineProperty(xhr, "responseText",{ configurable: true, value: payload });
-            Object.defineProperty(xhr, "response",    { configurable: true, value: payload });
+            Object.defineProperty(xhr, "readyState", { configurable: true, value: 4 });
+            Object.defineProperty(xhr, "status", { configurable: true, value: 503 });
+            Object.defineProperty(xhr, "responseText", { configurable: true, value: payload });
+            Object.defineProperty(xhr, "response", { configurable: true, value: payload });
             if (typeof xhr.onreadystatechange === "function") xhr.onreadystatechange();
             if (typeof xhr.onload === "function") xhr.onload();
           }, 0);
