@@ -17,19 +17,7 @@
         <img class="brand-logo" src="/Logo.png" alt="Giffy Game Creator" />
       </div>
     </header>
-
-    <nav class="main-nav screen-only" aria-label="ניווט בין משחקים">
-      <button type="button" class="nav-btn active" data-target="homeSection">דף הבית</button>
-      <button type="button" class="nav-btn" data-target="wordSearchSection">תפזורת</button>
-      <button type="button" class="nav-btn" data-target="crosswordSection">תשחץ</button>
-      <button type="button" class="nav-btn" data-target="secretCodeSection">קוד סודי</button>
-      <button type="button" class="nav-btn" data-target="sequenceSection">השלמת סדרה</button>
-      <button type="button" class="nav-btn" data-target="whoAmISection">מי אני</button>
-      <button type="button" class="nav-btn" data-target="mathQuizSection">חשבון מילולי</button>
-      <button type="button" class="nav-btn" data-target="geoQuizSection">מדינות ודגלים</button>
-    </nav>
-
-    <main>
+<main>
       <section id="homeSection" class="content-section active-section">
         <h2>בחרו משחק</h2>
         <div class="card-grid">
@@ -184,6 +172,93 @@
         </div>
       </section>
 
+            <section id="sudokuSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="sudokuPrintTitle">סודוקו</h2>
+          </div>
+          <h2 class="result-title screen-title" id="sudokuRenderTitle">סודוקו</h2>
+          <div id="sudokuMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="humanBodySection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="humanBodyPrintTitle">גוף האדם</h2>
+          </div>
+          <h2 class="result-title screen-title" id="humanBodyRenderTitle">גוף האדם</h2>
+          <div id="humanBodyMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="triviaSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="triviaPrintTitle">שאלות טריוויה</h2>
+          </div>
+          <h2 class="result-title screen-title" id="triviaRenderTitle">שאלות טריוויה</h2>
+          <div id="triviaMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="mathBingoSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="mathBingoPrintTitle">בינגו חשבון</h2>
+          </div>
+          <h2 class="result-title screen-title" id="mathBingoRenderTitle">בינגו חשבון</h2>
+          <div id="mathBingoMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="holidaysSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="holidaysPrintTitle">חגי ישראל</h2>
+          </div>
+          <h2 class="result-title screen-title" id="holidaysRenderTitle">חגי ישראל</h2>
+          <div id="holidaysMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="animalHomesSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="animalHomesPrintTitle">בעלי חיים והבית שלהם</h2>
+          </div>
+          <h2 class="result-title screen-title" id="animalHomesRenderTitle">בעלי חיים והבית שלהם</h2>
+          <div id="animalHomesMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="smartMazeSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="smartMazePrintTitle">מבוך חכם</h2>
+          </div>
+          <h2 class="result-title screen-title" id="smartMazeRenderTitle">מבוך חכם</h2>
+          <div id="smartMazeMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
+
+      <section id="anagramSection" class="content-section hidden-section">
+        <div class="result-card">
+          <div class="print-header">
+            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <h2 id="anagramPrintTitle">אנגרמה</h2>
+          </div>
+          <h2 class="result-title screen-title" id="anagramRenderTitle">אנגרמה</h2>
+          <div id="anagramMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+        </div>
+      </section>
       <section id="whoAmISection" class="content-section hidden-section">
         <h2>מי אני</h2>
         <div class="controls-panel screen-only">
@@ -286,5 +361,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
 
 
