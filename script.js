@@ -67,14 +67,47 @@ function setMessage(node, message, kind = 'info') {
   node.style.color = kind === 'error' ? '#dc2626' : kind === 'success' ? '#15803d' : '#1d4ed8';
 }
 
+function resolveApiBase() {
+  const runtimeBase =
+    window.WORDGAMES_API_BASE ||
+    localStorage.getItem('wordgames_api_base') ||
+    '';
+
+  return String(runtimeBase || '').trim().replace(/\/+$/, '');
+}
+
+function buildApiUrl(url) {
+  const raw = String(url || '').trim();
+  if (!raw) return raw;
+  if (/^https?:\/\//i.test(raw)) return raw;
+
+  const apiBase = resolveApiBase();
+  if (!apiBase) return raw;
+
+  if (raw.startsWith('/')) return `${apiBase}${raw}`;
+  return `${apiBase}/${raw}`;
+}
+
 async function fetchJson(url, payload) {
-  const response = await fetch(url, {
+  const finalUrl = buildApiUrl(url);
+
+  const response = await fetch(finalUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload || {})
   });
+
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || 'שגיאה בבקשת השרת.');
+
+  if (!response.ok) {
+    throw new Error(
+      data.error ||
+      (resolveApiBase()
+        ? 'השרת החיצוני לא החזיר תשובה תקינה.'
+        : 'פונקציית AI אינה זמינה כרגע באתר הסטטי. יש להגדיר backend ציבורי.')
+    );
+  }
+
   return data;
 }
 
