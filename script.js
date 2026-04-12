@@ -550,8 +550,8 @@ function renderSecretCode() {
     item.innerHTML = `
       <h3>חידה ${index + 1}</h3>
       <p>רמז: ${entry.clue}</p>
-      <div style="display:flex;justify-content:flex-end;width:100%;direction:rtl;">
-        <div style="display:inline-flex;flex-direction:row;direction:rtl;justify-content:flex-end;gap:10px;unicode-bidi:plaintext;margin:8px 0 12px;">
+      <div style="display:block;width:100%;text-align:right;direction:rtl;">
+        <div style="display:inline-flex;display:inline-flex;flex-direction:row;direction:rtl;justify-content:flex-start;gap:10px;unicode-bidi:plaintext;margin:8px 0 12px;">
           ${encodedHtml}
         </div>
       </div>
@@ -1896,6 +1896,7 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
     generate();
   })();
 })();
+
 
 
 
