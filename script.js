@@ -1901,3 +1901,28 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
 
 
 
+
+/* HOME BACK BUTTON ENHANCER */
+function enhanceBackHomeButtons() {
+  document.querySelectorAll('button[id^="backHome"][id$="Btn"]').forEach((btn) => {
+    if (btn.dataset.homeEnhanced === '1') return;
+
+    btn.type = 'button';
+    btn.classList.add('home-back-btn');
+    btn.innerHTML = '<span class="home-back-icon" aria-hidden="true">🏠</span><span>חזרה לדף הבית</span>';
+
+    const controlsPanel = btn.closest('.controls-panel');
+    if (controlsPanel) {
+      const title = controlsPanel.querySelector('h2');
+      if (title) {
+        title.insertAdjacentElement('afterend', btn);
+      } else {
+        controlsPanel.prepend(btn);
+      }
+    }
+
+    btn.dataset.homeEnhanced = '1';
+  });
+}
+
+window.addEventListener('load', enhanceBackHomeButtons);
