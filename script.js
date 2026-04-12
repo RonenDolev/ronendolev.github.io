@@ -514,30 +514,56 @@ function renderSecretCode() {
   const { title, entries, symbolMap, showSolution } = state.secretCode;
   elements.secretCodeRenderTitle.textContent = title || 'קוד סודי';
   elements.secretCodePrintTitle.textContent = title || 'קוד סודי';
+
   elements.secretCodeKey.innerHTML = '';
-  Array.from(symbolMap.entries()).slice(0, Math.max(6, Math.ceil(symbolMap.size * 0.65))).forEach(([letter, symbol]) => {
+  elements.secretCodeKey.style.display = 'flex';
+  elements.secretCodeKey.style.flexWrap = 'wrap';
+  elements.secretCodeKey.style.gap = '10px';
+  elements.secretCodeKey.style.direction = 'rtl';
+  elements.secretCodeKey.style.justifyContent = 'flex-start';
+
+  Array.from(symbolMap.entries()).forEach(([letter, symbol]) => {
     const chip = document.createElement('div');
     chip.className = 'key-chip';
+    chip.style.display = 'inline-flex';
+    chip.style.flexDirection = 'row-reverse';
+    chip.style.alignItems = 'center';
+    chip.style.gap = '8px';
+    chip.style.direction = 'rtl';
     chip.innerHTML = `<strong>${symbol}</strong><span>${letter}</span>`;
     elements.secretCodeKey.appendChild(chip);
   });
 
   elements.secretCodeList.innerHTML = '';
   entries.forEach((entry, index) => {
-    const item = document.createElement('article');
+    const item = document.createElement('div');
     item.className = 'quiz-item';
-    const encoded = entry.word.split('').map((char) => symbolMap.get(char)).reverse().join(' ');
+
+    const encodedSymbols = entry.word
+      .split('')
+      .map((char) => symbolMap.get(char) || char);
+
+    const encodedHtml = encodedSymbols
+      .map((symbol) => `<span style="display:inline-flex;min-width:18px;justify-content:center;">${symbol}</span>`)
+      .join('');
+
     item.innerHTML = `
-      <h4>חידה ${index + 1}</h4>
-      <p class="small">רמז: ${entry.clue}</p>
-      <p><strong>${encoded}</strong></p>
+      <h3>חידה ${index + 1}</h3>
+      <p>רמז: ${entry.clue}</p>
+      <div style="display:flex;justify-content:flex-start;">
+        <div style="display:inline-flex;flex-direction:row-reverse;direction:rtl;gap:10px;unicode-bidi:isolate;margin:8px 0 12px;">
+          ${encodedHtml}
+        </div>
+      </div>
       <label>התשובה שלך</label>
-      <input type="text" data-answer="${entry.word}" data-type="text-answer" />
-      <p class="solution-line ${showSolution ? '' : 'hidden-section'}"><strong>פתרון:</strong> ${entry.word}</p>
+      <input type="text" data-answer="${entry.word}" data-type="text" />
+      <p class="solution-line ${showSolution ? '' : 'hidden-section'}">פתרון: ${entry.word}</p>
     `;
+
     elements.secretCodeList.appendChild(item);
   });
 }
+
 elements.generateSecretCodeBtn.addEventListener('click', async () => {
   try {
     setMessage(elements.secretCodeMessage, 'יוצר קוד סודי…');
@@ -1870,3 +1896,4 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
     generate();
   })();
 })();
+
