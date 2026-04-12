@@ -293,3 +293,299 @@ button.word-chip {
   -webkit-text-fill-color: #111827 !important;
   text-shadow: none !important;
 }
+
+/* PRINT SUPPORT FOR NEW GAMES */
+@media print {
+  body[data-print-target="sudokuSection"] #sudokuSection,
+  body[data-print-target="humanBodySection"] #humanBodySection,
+  body[data-print-target="triviaSection"] #triviaSection,
+  body[data-print-target="mathBingoSection"] #mathBingoSection,
+  body[data-print-target="holidaysSection"] #holidaysSection,
+  body[data-print-target="animalHomesSection"] #animalHomesSection,
+  body[data-print-target="smartMazeSection"] #smartMazeSection,
+  body[data-print-target="anagramSection"] #anagramSection {
+    display: block !important;
+  }
+
+  body[data-print-target="sudokuSection"] .content-section:not(#sudokuSection),
+  body[data-print-target="humanBodySection"] .content-section:not(#humanBodySection),
+  body[data-print-target="triviaSection"] .content-section:not(#triviaSection),
+  body[data-print-target="mathBingoSection"] .content-section:not(#mathBingoSection),
+  body[data-print-target="holidaysSection"] .content-section:not(#holidaysSection),
+  body[data-print-target="animalHomesSection"] .content-section:not(#animalHomesSection),
+  body[data-print-target="smartMazeSection"] .content-section:not(#smartMazeSection),
+  body[data-print-target="anagramSection"] .content-section:not(#anagramSection) {
+    display: none !important;
+  }
+
+  body[data-print-target="sudokuSection"] .card-grid,
+  body[data-print-target="humanBodySection"] .card-grid,
+  body[data-print-target="triviaSection"] .card-grid,
+  body[data-print-target="mathBingoSection"] .card-grid,
+  body[data-print-target="holidaysSection"] .card-grid,
+  body[data-print-target="animalHomesSection"] .card-grid,
+  body[data-print-target="smartMazeSection"] .card-grid,
+  body[data-print-target="anagramSection"] .card-grid {
+    display: none !important;
+  }
+
+  body[data-print-target="sudokuSection"] #sudokuSection .result-card,
+  body[data-print-target="humanBodySection"] #humanBodySection .result-card,
+  body[data-print-target="triviaSection"] #triviaSection .result-card,
+  body[data-print-target="mathBingoSection"] #mathBingoSection .result-card,
+  body[data-print-target="holidaysSection"] #holidaysSection .result-card,
+  body[data-print-target="animalHomesSection"] #animalHomesSection .result-card,
+  body[data-print-target="smartMazeSection"] #smartMazeSection .result-card,
+  body[data-print-target="anagramSection"] #anagramSection .result-card {
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    padding: 0 !important;
+  }
+
+  body[data-print-target="anagramSection"] #anagramSection .grid-two > .card {
+    display: none !important;
+  }
+
+  body[data-print-target="sudokuSection"] #sudokuSection .screen-title,
+  body[data-print-target="humanBodySection"] #humanBodySection .screen-title,
+  body[data-print-target="triviaSection"] #triviaSection .screen-title,
+  body[data-print-target="mathBingoSection"] #mathBingoSection .screen-title,
+  body[data-print-target="holidaysSection"] #holidaysSection .screen-title,
+  body[data-print-target="animalHomesSection"] #animalHomesSection .screen-title,
+  body[data-print-target="smartMazeSection"] #smartMazeSection .screen-title,
+  body[data-print-target="anagramSection"] #anagramSection .screen-title {
+    display: none !important;
+  }
+}
+
+.print-header .print-logo {
+  display: none;
+}
+
+@media print {
+  body[data-print-target="anagramSection"] #anagramSection .print-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+
+  body[data-print-target="anagramSection"] #anagramSection .print-header .print-logo {
+    display: block !important;
+    width: 96px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+}
+
+
+/* NEW GAMES UI */
+.grid-two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+.form-grid { display: grid; gap: 12px; }
+.inline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.center-text { text-align: center; }
+.solution-line { margin-top: 10px; font-weight: 700; color: #1e3a8a; }
+.print-header { display: none; text-align: center; margin-bottom: 12px; }
+.print-header h2 { margin: 0; }
+.sudoku-grid {
+  width: fit-content;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 56px);
+  grid-template-rows: repeat(4, 56px);
+  gap: 0;
+  border: 3px solid #1e293b;
+  background: #fff;
+}
+.sudoku-cell {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #64748b;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  background: #fff;
+}
+.sudoku-cell.given { background: #eff6ff; }
+.sudoku-cell.solution-visible { background: #dbeafe; }
+.sudoku-cell:nth-child(4n+1) { border-right-width: 2px; }
+.sudoku-cell:nth-child(-n+4) { border-top-width: 2px; }
+.sudoku-cell[data-col="1"], .sudoku-cell[data-col="3"] { border-left-width: 2px; }
+.sudoku-cell[data-row="1"], .sudoku-cell[data-row="3"] { border-bottom-width: 2px; }
+.sudoku-cell input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  font-size: 24px;
+  font-weight: 700;
+  background: transparent;
+}
+.math-bingo-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
+  gap: 10px;
+}
+.bingo-cell {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  border: 2px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  font-size: 24px;
+  font-weight: 700;
+  box-shadow: none;
+}
+.bingo-cell.marked { background: #dcfce7; border-color: #16a34a; }
+.bingo-cell.solution { background: #dbeafe; border-color: #2563eb; }
+.prompt-box {
+  padding: 16px;
+  margin-bottom: 18px;
+  border-radius: 18px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  text-align: center;
+  font-weight: 700;
+}
+.maze-grid {
+  width: fit-content;
+  margin: 0 auto;
+  display: grid;
+  gap: 2px;
+  background: #1e293b;
+  padding: 4px;
+  border-radius: 14px;
+}
+.maze-cell {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 6px;
+  min-width: 34px;
+  padding: 0;
+  box-shadow: none;
+  background: #fff;
+}
+.maze-cell.wall { background: #334155; cursor: default; }
+.maze-cell.start { background: #86efac; }
+.maze-cell.finish { background: #fca5a5; }
+.maze-cell.selected { background: #fde68a; }
+.maze-cell.solution { background: #93c5fd; }
+.quiz-item .option-row strong { min-width: 26px; }
+@media (max-width: 640px) {
+  .grid-two { grid-template-columns: 1fr; }
+  .sudoku-grid { grid-template-columns: repeat(4, 46px); grid-template-rows: repeat(4, 46px); }
+  .sudoku-cell { width: 46px; height: 46px; font-size: 20px; }
+  .sudoku-cell input { font-size: 20px; }
+  .math-bingo-board { grid-template-columns: repeat(4, minmax(58px, 1fr)); }
+  .bingo-cell { min-height: 58px; font-size: 20px; }
+  .maze-cell { width: 28px; height: 28px; min-width: 28px; }
+}
+@media print {
+  body[data-print-target="anagramSection"] #anagramSection .print-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+  body[data-print-target="anagramSection"] #anagramSection .print-header .print-logo {
+    display: block !important;
+    width: 96px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+}
+
+
+/* TARGETED UPDATE: common two-panel layout + interactive word search */
+.content-section.hidden-section { display: none !important; }
+.content-section.split-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+.content-section.split-layout > h2 {
+  flex: 0 0 100%;
+  margin-bottom: 0;
+}
+.content-section.split-layout > .controls-panel {
+  flex: 0 0 min(420px, 100%);
+  margin-bottom: 0;
+}
+.content-section.split-layout > .result-card {
+  flex: 1 1 520px;
+  min-width: 320px;
+}
+.word-cell {
+  cursor: pointer;
+  user-select: none;
+}
+.word-cell.active {
+  background: #fde68a;
+}
+.word-cell.found {
+  background: #bbf7d0;
+}
+.crossword-cell.correct { background: #dcfce7; }
+.crossword-cell.wrong { background: #fee2e2; }
+@media (max-width: 900px) {
+  .content-section.split-layout > .controls-panel,
+  .content-section.split-layout > .result-card {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+.bingo-cell.wrong { background: #fee2e2; border-color: #ef4444; }
+.quiz-item.active { border-color: #60a5fa; background: #eff6ff; }
+
+
+.secret-key { direction: rtl; }
+.key-chip { direction: rtl; flex-direction: row-reverse; }
+.secret-code-line {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  direction: rtl;
+  unicode-bidi: isolate;
+  text-align: right;
+  margin: 8px 0 10px;
+  font-weight: 800;
+  font-size: 22px;
+}
+.secret-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 4px;
+}
+@media print {
+  .secret-code-line {
+    justify-content: flex-start !important;
+  }
+}

@@ -12,9 +12,9 @@
       <div class="header-brand-row">
         <div class="header-copy">
           <h1>מרכז משחקי חשיבה לילדים</h1>
-          <p class="subtitle">תפזורת, תשחץ, קוד סודי, השלמת סדרה, מי אני, חשבון מילולי וגיאוגרפיה — עם AI, פתרון בדפדפן והדפסה.</p>
+          <p class="subtitle">תפזורת, תשחץ, קוד סודי, השלמת סדרה, מי אני, חשבון מילולי, גיאוגרפיה, סודוקו, גוף האדם, טריוויה, בינגו חשבון, חגי ישראל, בעלי חיים והבית שלהם, מבוך חכם ואנגרמה — עם AI, פתרון בדפדפן והדפסה.</p>
         </div>
-        <img class="brand-logo" src="/Logo.png" alt="Giffy Game Creator" />
+        <img class="brand-logo" src="/Logo.png" alt="Dolev Game Creator" />
       </div>
     </header>
 <main>
@@ -28,10 +28,19 @@
           <article class="card"><h3>מי אני</h3><p>חידות זיהוי לפי רמזים מדורגים ונושא לבחירה.</p><button class="go-btn" data-target="whoAmISection">למסך מי אני</button></article>
           <article class="card"><h3>חשבון מילולי</h3><p>חיבור, חיסור, כפל וחילוק בתוך חידות מילוליות לפי רמות.</p><button class="go-btn" data-target="mathQuizSection">למסך חשבון מילולי</button></article>
           <article class="card"><h3>מדינות, ערי בירה ודגלים</h3><p>חידון גיאוגרפי עם בחירת סוג, אזור ורמת קושי.</p><button class="go-btn" data-target="geoQuizSection">למסך גיאוגרפיה</button></article>
+          <article class="card"><h3>סודוקו</h3><p>לוח חכם לילדים עם מספרים או סמלים ברמת קושי מותאמת.</p><button type="button" class="go-btn" data-target="sudokuSection">למסך סודוקו</button></article>
+          <article class="card"><h3>גוף האדם</h3><p>לימוד איברי הגוף והתפקיד שלהם דרך שאלות והתאמות.</p><button type="button" class="go-btn" data-target="humanBodySection">למסך גוף האדם</button></article>
+          <article class="card"><h3>שאלות טריוויה</h3><p>שאלות ידע כלליות לילדים עם רמות קושי שונות.</p><button type="button" class="go-btn" data-target="triviaSection">למסך טריוויה</button></article>
+          <article class="card"><h3>בינגו חשבון</h3><p>תרגילי חשבון מהירים עם לוח בינגו מהנה.</p><button type="button" class="go-btn" data-target="mathBingoSection">למסך בינגו</button></article>
+          <article class="card"><h3>חגי ישראל</h3><p>משחקי שאלות, התאמות וסמלים על חגי ישראל.</p><button type="button" class="go-btn" data-target="holidaysSection">למסך חגי ישראל</button></article>
+          <article class="card"><h3>בעלי חיים והבית שלהם</h3><p>התאמת בעלי חיים לסביבת המחיה או לבית שלהם.</p><button type="button" class="go-btn" data-target="animalHomesSection">למסך בעלי חיים</button></article>
+          <article class="card"><h3>מבוך חכם</h3><p>מסלולי חשיבה לילדים עם משימות ורמזים.</p><button type="button" class="go-btn" data-target="smartMazeSection">למסך מבוך חכם</button></article>
+          <article class="card"><h3>אנגרמה</h3><p>סידור אותיות מבולבלות למילה נכונה בעברית.</p><button type="button" class="go-btn" data-target="anagramSection">למסך אנגרמה</button></article>
+
         </div>
       </section>
 
-      <section id="wordSearchSection" class="content-section hidden-section">
+      <section id="wordSearchSection" class="content-section split-layout hidden-section">
         <h2>יצירת תפזורת</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -51,13 +60,14 @@
               <button id="buildWordSearchBtn" type="button" class="secondary-btn">בנה תפזורת</button>
               <button id="toggleWordSearchBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printWordSearchBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeWordSearchBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="wordSearchMessage" class="message"></div>
           </div>
         </div>
         <div id="wordSearchResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="wordSearchPrintTitle">תפזורת</h2>
           </div>
           <h2 class="result-title screen-title" id="wordSearchRenderTitle">תפזורת</h2>
@@ -70,7 +80,7 @@
         </div>
       </section>
 
-      <section id="crosswordSection" class="content-section hidden-section">
+      <section id="crosswordSection" class="content-section split-layout hidden-section">
         <h2>יצירת תשחץ</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -88,13 +98,14 @@
               <button id="checkCrosswordBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleCrosswordBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printCrosswordBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeCrosswordBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="crosswordMessage" class="message"></div>
           </div>
         </div>
         <div id="crosswordResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="crosswordPrintTitle">תשחץ</h2>
           </div>
           <h2 class="result-title screen-title" id="crosswordRenderTitle">תשחץ</h2>
@@ -107,7 +118,7 @@
         </div>
       </section>
 
-      <section id="secretCodeSection" class="content-section hidden-section">
+      <section id="secretCodeSection" class="content-section split-layout hidden-section">
         <h2>קוד סודי</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -125,13 +136,14 @@
               <button id="checkSecretCodeBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleSecretCodeBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printSecretCodeBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeSecretCodeBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="secretCodeMessage" class="message"></div>
           </div>
         </div>
         <div id="secretCodeResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="secretCodePrintTitle">קוד סודי</h2>
           </div>
           <h2 class="result-title screen-title" id="secretCodeRenderTitle">קוד סודי</h2>
@@ -140,7 +152,7 @@
         </div>
       </section>
 
-      <section id="sequenceSection" class="content-section hidden-section">
+      <section id="sequenceSection" class="content-section split-layout hidden-section">
         <h2>השלמת סדרה</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -158,13 +170,14 @@
               <button id="checkSequenceBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleSequenceBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printSequenceBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeSequenceBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="sequenceMessage" class="message"></div>
           </div>
         </div>
         <div id="sequenceResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="sequencePrintTitle">השלמת סדרה</h2>
           </div>
           <h2 class="result-title screen-title" id="sequenceRenderTitle">השלמת סדרה</h2>
@@ -172,94 +185,281 @@
         </div>
       </section>
 
-            <section id="sudokuSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="sudokuPrintTitle">סודוקו</h2>
-          </div>
-          <h2 class="result-title screen-title" id="sudokuRenderTitle">סודוקו</h2>
-          <div id="sudokuMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+            <section id="sudokuSection" class="content-section split-layout hidden-section">
+  <h2>סודוקו</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="sudokuTitle">כותרת</label>
+      <input id="sudokuTitle" type="text" placeholder="סודוקו לילדים" />
+      <div class="inline-fields">
+        <div><label for="sudokuDifficulty">רמת קושי</label><select id="sudokuDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+        <div><label for="sudokuSymbolMode">סוג לוח</label><select id="sudokuSymbolMode"><option value="numbers" selected>מספרים</option><option value="shapes">צורות</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateSudokuBtn" type="button">צור סודוקו</button>
+        <button id="checkSudokuBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+        <button id="toggleSudokuBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printSudokuBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeSudokuBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="sudokuMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="sudokuResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="sudokuPrintTitle">סודוקו</h2>
+    </div>
+    <h2 class="result-title screen-title" id="sudokuRenderTitle">סודוקו</h2>
+    <div id="sudokuGrid" class="sudoku-grid"></div>
+  </div>
+</section>
 
-      <section id="humanBodySection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="humanBodyPrintTitle">גוף האדם</h2>
-          </div>
-          <h2 class="result-title screen-title" id="humanBodyRenderTitle">גוף האדם</h2>
-          <div id="humanBodyMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="humanBodySection" class="content-section split-layout hidden-section">
+  <h2>גוף האדם</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="humanBodyTitle">כותרת</label>
+      <input id="humanBodyTitle" type="text" placeholder="גוף האדם - הכירו את האיברים" />
+      <div class="inline-fields">
+        <div><label for="humanBodyCount">כמה שאלות</label><select id="humanBodyCount"></select></div>
+        <div><label for="humanBodyDifficulty">רמת קושי</label><select id="humanBodyDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateHumanBodyBtn" type="button">צור משחק גוף האדם</button>
+        <button id="checkHumanBodyBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+        <button id="toggleHumanBodyBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printHumanBodyBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeHumanBodyBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="humanBodyMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="humanBodyResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="humanBodyPrintTitle">גוף האדם</h2>
+    </div>
+    <h2 class="result-title screen-title" id="humanBodyRenderTitle">גוף האדם</h2>
+    <div id="humanBodyList" class="quiz-list"></div>
+  </div>
+</section>
 
-      <section id="triviaSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="triviaPrintTitle">שאלות טריוויה</h2>
-          </div>
-          <h2 class="result-title screen-title" id="triviaRenderTitle">שאלות טריוויה</h2>
-          <div id="triviaMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="triviaSection" class="content-section split-layout hidden-section">
+  <h2>שאלות טריוויה</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="triviaTitle">כותרת</label>
+      <input id="triviaTitle" type="text" placeholder="טריוויה לילדים" />
+      <div class="inline-fields">
+        <div><label for="triviaTopic">נושא</label><select id="triviaTopic"><option value="mixed" selected>מעורב</option><option value="animals">בעלי חיים</option><option value="space">חלל</option><option value="science">מדע</option><option value="sports">ספורט</option><option value="israel">ישראל</option></select></div>
+        <div><label for="triviaCount">כמה שאלות</label><select id="triviaCount"></select></div>
+        <div><label for="triviaDifficulty">רמת קושי</label><select id="triviaDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateTriviaBtn" type="button">צור טריוויה</button>
+        <button id="checkTriviaBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+        <button id="toggleTriviaBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printTriviaBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeTriviaBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="triviaMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="triviaResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="triviaPrintTitle">שאלות טריוויה</h2>
+    </div>
+    <h2 class="result-title screen-title" id="triviaRenderTitle">שאלות טריוויה</h2>
+    <div id="triviaList" class="quiz-list"></div>
+  </div>
+</section>
 
-      <section id="mathBingoSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="mathBingoPrintTitle">בינגו חשבון</h2>
-          </div>
-          <h2 class="result-title screen-title" id="mathBingoRenderTitle">בינגו חשבון</h2>
-          <div id="mathBingoMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="mathBingoSection" class="content-section split-layout hidden-section">
+  <h2>בינגו חשבון</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="mathBingoTitle">כותרת</label>
+      <input id="mathBingoTitle" type="text" placeholder="בינגו חשבון" />
+      <div class="inline-fields">
+        <div><label for="mathBingoDifficulty">רמת קושי</label><select id="mathBingoDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+        <div><label for="mathBingoProblems">כמה תרגילים</label><select id="mathBingoProblems"></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateMathBingoBtn" type="button">צור בינגו חשבון</button>
+        <button id="checkMathBingoBtn" type="button" class="secondary-btn">בדוק בינגו</button>
+        <button id="toggleMathBingoBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printMathBingoBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeMathBingoBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="mathBingoMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="mathBingoResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="mathBingoPrintTitle">בינגו חשבון</h2>
+    </div>
+    <h2 class="result-title screen-title" id="mathBingoRenderTitle">בינגו חשבון</h2>
+    <div id="mathBingoPrompt" class="prompt-box">כאן תופיע כרטיסיית הבינגו ותרגילי החשבון.</div>
+    <div id="mathBingoBoard" class="math-bingo-board"></div>
+    <div class="divider"></div>
+    <div id="mathBingoList" class="quiz-list"></div>
+  </div>
+</section>
 
-      <section id="holidaysSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="holidaysPrintTitle">חגי ישראל</h2>
-          </div>
-          <h2 class="result-title screen-title" id="holidaysRenderTitle">חגי ישראל</h2>
-          <div id="holidaysMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="holidaysSection" class="content-section split-layout hidden-section">
+  <h2>חגי ישראל</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="holidaysTitle">כותרת</label>
+      <input id="holidaysTitle" type="text" placeholder="חגי ישראל" />
+      <div class="inline-fields">
+        <div><label for="holidaysCount">כמה שאלות</label><select id="holidaysCount"></select></div>
+        <div><label for="holidaysDifficulty">רמת קושי</label><select id="holidaysDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateHolidaysBtn" type="button">צור משחק חגי ישראל</button>
+        <button id="checkHolidaysBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+        <button id="toggleHolidaysBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printHolidaysBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeHolidaysBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="holidaysMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="holidaysResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="holidaysPrintTitle">חגי ישראל</h2>
+    </div>
+    <h2 class="result-title screen-title" id="holidaysRenderTitle">חגי ישראל</h2>
+    <div id="holidaysList" class="quiz-list"></div>
+  </div>
+</section>
 
-      <section id="animalHomesSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="animalHomesPrintTitle">בעלי חיים והבית שלהם</h2>
-          </div>
-          <h2 class="result-title screen-title" id="animalHomesRenderTitle">בעלי חיים והבית שלהם</h2>
-          <div id="animalHomesMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="animalHomesSection" class="content-section split-layout hidden-section">
+  <h2>בעלי חיים והבית שלהם</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="animalHomesTitle">כותרת</label>
+      <input id="animalHomesTitle" type="text" placeholder="בעלי חיים והבית שלהם" />
+      <div class="inline-fields">
+        <div><label for="animalHomesCount">כמה שאלות</label><select id="animalHomesCount"></select></div>
+        <div><label for="animalHomesDifficulty">רמת קושי</label><select id="animalHomesDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateAnimalHomesBtn" type="button">צור משחק התאמות</button>
+        <button id="checkAnimalHomesBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+        <button id="toggleAnimalHomesBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printAnimalHomesBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeAnimalHomesBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="animalHomesMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="animalHomesResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="animalHomesPrintTitle">בעלי חיים והבית שלהם</h2>
+    </div>
+    <h2 class="result-title screen-title" id="animalHomesRenderTitle">בעלי חיים והבית שלהם</h2>
+    <div id="animalHomesList" class="quiz-list"></div>
+  </div>
+</section>
 
-      <section id="smartMazeSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="smartMazePrintTitle">מבוך חכם</h2>
-          </div>
-          <h2 class="result-title screen-title" id="smartMazeRenderTitle">מבוך חכם</h2>
-          <div id="smartMazeMessage" class="message">המשחק ייבנה בשלב הבא.</div>
-        </div>
-      </section>
+      <section id="smartMazeSection" class="content-section split-layout hidden-section">
+  <h2>מבוך חכם</h2>
+  <div class="controls-panel screen-only">
+    <div class="panel-block">
+      <h3>פרטי המשחק</h3>
+      <label for="smartMazeTitle">כותרת</label>
+      <input id="smartMazeTitle" type="text" placeholder="מבוך חכם" />
+      <div class="inline-fields">
+        <div><label for="smartMazeDifficulty">רמת קושי</label><select id="smartMazeDifficulty"><option value="easy">קל</option><option value="medium" selected>בינוני</option><option value="hard">קשה</option></select></div>
+        <div><label for="smartMazeTheme">נושא</label><select id="smartMazeTheme"><option value="forest" selected>יער</option><option value="space">חלל</option><option value="castle">טירה</option></select></div>
+      </div>
+      <div class="button-row">
+        <button id="generateSmartMazeBtn" type="button">צור מבוך</button>
+        <button id="checkSmartMazeBtn" type="button" class="secondary-btn">בדוק מסלול</button>
+        <button id="toggleSmartMazeBtn" type="button" class="alt-btn">הצג פתרון</button>
+        <button id="printSmartMazeBtn" type="button" class="print-btn">הדפס</button>
+        <button id="backHomeSmartMazeBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+      </div>
+      <div id="smartMazeMessage" class="message"></div>
+    </div>
+  </div>
+  <div id="smartMazeResult" class="result-card">
+    <div class="print-head print-only">
+      <img src="/Logo.png" alt="Giffy Game Creator" />
+      <h2 id="smartMazePrintTitle">מבוך חכם</h2>
+    </div>
+    <h2 class="result-title screen-title" id="smartMazeRenderTitle">מבוך חכם</h2>
+    <p id="smartMazeInstruction" class="small center-text">לחצו על המשבצות הלבנות כדי לסמן את הדרך מהתחלה לסיום.</p>
+    <div id="smartMazeGrid" class="maze-grid"></div>
+  </div>
+</section>
 
-      <section id="anagramSection" class="content-section hidden-section">
-        <div class="result-card">
-          <div class="print-header">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
-            <h2 id="anagramPrintTitle">אנגרמה</h2>
+            <section id="anagramSection" class="content-section hidden-section">
+        <div class="grid-two">
+          <div class="card">
+            <h2>אנגרמה</h2>
+            <div class="form-grid">
+              <label for="anagramTitle">כותרת</label>
+              <input id="anagramTitle" type="text" placeholder="למשל: אנגרמה - חיות" />
+
+              <label for="anagramTopic">נושא דרך AI</label>
+              <input id="anagramTopic" type="text" placeholder="למשל: חיות, מאכלים, חגים" />
+
+              <div class="inline-grid">
+                <div>
+                  <label for="anagramCount">כמה מילים</label>
+                  <select id="anagramCount"></select>
+                </div>
+                <div>
+                  <label for="anagramDifficulty">רמת קושי</label>
+                  <select id="anagramDifficulty">
+                    <option value="easy">קל</option>
+                    <option value="medium" selected>בינוני</option>
+                    <option value="hard">קשה</option>
+                  </select>
+                </div>
+              </div>
+
+              <label for="anagramWords">מילים ידניות (מילה בכל שורה)</label>
+              <textarea id="anagramWords" rows="8" placeholder="כלב`r`nחתול`r`nאריה"></textarea>
+
+              <div class="button-row">
+                <button id="generateAnagramBtn" type="button">צור מילים בעזרת AI</button>
+                <button id="buildAnagramBtn" type="button">בנה אנגרמה</button>
+                <button id="checkAnagramBtn" type="button" class="secondary-btn">בדוק תשובות</button>
+                <button id="toggleAnagramSolutionBtn" type="button" class="secondary-btn">הצג פתרון</button>
+                <button id="printAnagramBtn" type="button" class="secondary-btn">הדפס</button>
+                <button id="backHomeAnagramBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
+              </div>
+
+              <div id="anagramMessage" class="message"></div>
+            </div>
           </div>
-          <h2 class="result-title screen-title" id="anagramRenderTitle">אנגרמה</h2>
-          <div id="anagramMessage" class="message">המשחק ייבנה בשלב הבא.</div>
+
+          <div id="anagramResult" class="result-card">
+            <div class="print-header">
+              <img class="print-logo" src="/Logo.png" alt="Giffy Game Creator" />
+              <h2 id="anagramPrintTitle">אנגרמה</h2>
+            </div>
+            <h2 class="result-title screen-title" id="anagramRenderTitle">אנגרמה</h2>
+            <div id="anagramList" class="quiz-list"></div>
+          </div>
         </div>
       </section>
-      <section id="whoAmISection" class="content-section hidden-section">
+      <section id="whoAmISection" class="content-section split-layout hidden-section">
         <h2>מי אני</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -277,13 +477,14 @@
               <button id="checkWhoAmIBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleWhoAmIBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printWhoAmIBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeWhoAmIBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="whoAmIMessage" class="message"></div>
           </div>
         </div>
         <div id="whoAmIResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="whoAmIPrintTitle">מי אני</h2>
           </div>
           <h2 class="result-title screen-title" id="whoAmIRenderTitle">מי אני</h2>
@@ -291,7 +492,7 @@
         </div>
       </section>
 
-      <section id="mathQuizSection" class="content-section hidden-section">
+      <section id="mathQuizSection" class="content-section split-layout hidden-section">
         <h2>חשבון מילולי מאתגר</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -310,13 +511,14 @@
               <button id="checkMathQuizBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleMathQuizBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printMathQuizBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeMathQuizBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="mathQuizMessage" class="message"></div>
           </div>
         </div>
         <div id="mathQuizResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="mathQuizPrintTitle">חשבון מילולי</h2>
           </div>
           <h2 class="result-title screen-title" id="mathQuizRenderTitle">חשבון מילולי</h2>
@@ -324,7 +526,7 @@
         </div>
       </section>
 
-      <section id="geoQuizSection" class="content-section hidden-section">
+      <section id="geoQuizSection" class="content-section split-layout hidden-section">
         <h2>מדינות, ערי בירה ודגלים</h2>
         <div class="controls-panel screen-only">
           <div class="panel-block">
@@ -342,13 +544,14 @@
               <button id="checkGeoQuizBtn" type="button" class="secondary-btn">בדוק תשובות</button>
               <button id="toggleGeoQuizBtn" type="button" class="alt-btn">הצג פתרון</button>
               <button id="printGeoQuizBtn" type="button" class="print-btn">הדפס</button>
+              <button id="backHomeGeoQuizBtn" type="button" class="secondary-btn">חזרה לדף הבית</button>
             </div>
             <div id="geoQuizMessage" class="message"></div>
           </div>
         </div>
         <div id="geoQuizResult" class="result-card">
           <div class="print-head print-only">
-            <img src="/Logo.png" alt="Giffy Game Creator" />
+            <img src="/Logo.png" alt="Dolev Game Creator" />
             <h2 id="geoQuizPrintTitle">חידון גיאוגרפיה</h2>
           </div>
           <h2 class="result-title screen-title" id="geoQuizRenderTitle">חידון גיאוגרפיה</h2>
@@ -361,6 +564,11 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
 
 
 
