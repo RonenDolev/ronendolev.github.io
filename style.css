@@ -136,6 +136,7 @@ h4 { margin: 0 0 10px; font-size: 20px; }
 .word-search-grid .word-cell:nth-child(-n+15) { border-top: 0; }
 .word-search-grid .word-cell:nth-child(15n+1) { border-left: 0; }
 .word-search-grid .word-cell:nth-child(15n) { border-right: 1px solid var(--line-color); }
+.word-search-grid .word-cell:nth-child(15n) { border-right: 1px solid var(--line-color); }
 
 .crossword-grid { width: fit-content; max-width: 100%; margin: 0 auto; border: 2px solid #000; display: grid; gap: 0; background: #000; }
 .crossword-cell {
@@ -590,4 +591,5 @@ button.word-chip {
     justify-content: flex-start !important;
   }
 }
+
 
