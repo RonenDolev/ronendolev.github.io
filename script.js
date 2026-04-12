@@ -520,7 +520,7 @@ function renderSecretCode() {
   elements.secretCodeKey.style.flexWrap = 'wrap';
   elements.secretCodeKey.style.gap = '10px';
   elements.secretCodeKey.style.direction = 'rtl';
-  elements.secretCodeKey.style.justifyContent = 'flex-start';
+  elements.secretCodeKey.style.justifyContent = 'flex-end';
 
   Array.from(symbolMap.entries()).forEach(([letter, symbol]) => {
     const chip = document.createElement('div');
@@ -550,7 +550,7 @@ function renderSecretCode() {
     item.innerHTML = `
       <h3>חידה ${index + 1}</h3>
       <p>רמז: ${entry.clue}</p>
-      <div style="display:flex;justify-content:flex-start;">
+      <div style="display:flex;justify-content:flex-end;width:100%;direction:rtl;">
         <div style="display:inline-flex;flex-direction:row;direction:rtl;justify-content:flex-end;gap:10px;unicode-bidi:plaintext;margin:8px 0 12px;">
           ${encodedHtml}
         </div>
@@ -1896,5 +1896,6 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
     generate();
   })();
 })();
+
 
 
