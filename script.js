@@ -526,7 +526,7 @@ function renderSecretCode() {
     const chip = document.createElement('div');
     chip.className = 'key-chip';
     chip.style.display = 'inline-flex';
-    chip.style.flexDirection = 'row-reverse';
+    chip.style.flexDirection = 'row';
     chip.style.alignItems = 'center';
     chip.style.gap = '8px';
     chip.style.direction = 'rtl';
@@ -551,7 +551,7 @@ function renderSecretCode() {
       <h3>חידה ${index + 1}</h3>
       <p>רמז: ${entry.clue}</p>
       <div style="display:flex;justify-content:flex-start;">
-        <div style="display:inline-flex;flex-direction:row-reverse;direction:rtl;gap:10px;unicode-bidi:isolate;margin:8px 0 12px;">
+        <div style="display:inline-flex;flex-direction:row;direction:rtl;justify-content:flex-end;gap:10px;unicode-bidi:plaintext;margin:8px 0 12px;">
           ${encodedHtml}
         </div>
       </div>
@@ -1896,4 +1896,5 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
     generate();
   })();
 })();
+
 
