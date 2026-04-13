@@ -384,13 +384,30 @@ function buildCrossword(entries) {
   }
   if (!best || !best.placed.length) return null;
   const trimmed = trimCrossword(best.grid, best.placed);
+
+  const startMap = new Map();
+  trimmed.entries.forEach((entry) => {
+    const key = `${entry.row}:${entry.col}`;
+    if (!startMap.has(key)) startMap.set(key, []);
+    startMap.get(key).push(entry);
+  });
+
   const numbers = new Map();
   let current = 1;
-  trimmed.entries.sort((a, b) => (a.row - b.row) || (a.col - b.col)).forEach((entry) => {
-    const key = `${entry.row}:${entry.col}`;
-    if (!numbers.has(key)) numbers.set(key, current++);
-    entry.number = numbers.get(key);
+
+  for (let row = 0; row < trimmed.grid.length; row += 1) {
+    for (let col = trimmed.grid[0].length - 1; col >= 0; col -= 1) {
+      const key = `${row}:${col}`;
+      if (startMap.has(key) && !numbers.has(key)) {
+        numbers.set(key, current++);
+      }
+    }
+  }
+
+  trimmed.entries.forEach((entry) => {
+    entry.number = numbers.get(`${entry.row}:${entry.col}`);
   });
+
   return { grid: trimmed.grid, entries: trimmed.entries, rows: trimmed.grid.length, cols: trimmed.grid[0].length };
 }
 function renderCrossword() {
@@ -444,11 +461,13 @@ function renderCrossword() {
   elements.crosswordDown.innerHTML = '';
   across.forEach((entry) => {
     const li = document.createElement('li');
+    li.value = entry.number;
     li.textContent = entry.clue;
     elements.crosswordAcross.appendChild(li);
   });
   down.forEach((entry) => {
     const li = document.createElement('li');
+    li.value = entry.number;
     li.textContent = entry.clue;
     elements.crosswordDown.appendChild(li);
   });
@@ -1905,24 +1924,27 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
 /* HOME BACK BUTTON ENHANCER */
 function enhanceBackHomeButtons() {
   document.querySelectorAll('button[id^="backHome"][id$="Btn"]').forEach((btn) => {
-    if (btn.dataset.homeEnhanced === '1') return;
-
     btn.type = 'button';
     btn.classList.add('home-back-btn');
-    btn.innerHTML = '<span class="home-back-icon" aria-hidden="true">🏠</span><span>חזרה לדף הבית</span>';
+    btn.setAttribute('aria-label', 'חזרה לדף הבית');
+    btn.innerHTML = '<span class="home-back-icon" aria-hidden="true">⌂</span><span>חזרה לדף הבית</span>';
 
-    const controlsPanel = btn.closest('.controls-panel');
-    if (controlsPanel) {
-      const title = controlsPanel.querySelector('h2');
-      if (title) {
-        title.insertAdjacentElement('afterend', btn);
-      } else {
-        controlsPanel.prepend(btn);
-      }
+    const section = btn.closest('section.content-section');
+    const sectionTitle = section?.querySelector(':scope > h2');
+
+    if (section && sectionTitle && btn.previousElementSibling !== sectionTitle) {
+      sectionTitle.insertAdjacentElement('afterend', btn);
+    } else if (section && !sectionTitle && btn.parentElement !== section) {
+      section.prepend(btn);
     }
 
     btn.dataset.homeEnhanced = '1';
   });
 }
 
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', enhanceBackHomeButtons);
+} else {
+  enhanceBackHomeButtons();
+}
 window.addEventListener('load', enhanceBackHomeButtons);
