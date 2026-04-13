@@ -385,11 +385,13 @@ function buildCrossword(entries) {
   if (!best || !best.placed.length) return null;
   const trimmed = trimCrossword(best.grid, best.placed);
 
-  trimmed.entries = trimmed.entries.map((entry) => (
-    entry.direction === 'across'
-      ? { ...entry, col: entry.col + entry.word.length - 1 }
-      : entry
-  ));
+  trimmed.entries = trimmed.entries
+    .filter((entry) => entry && entry.word && entry.clue && (entry.direction === 'across' || entry.direction === 'down'))
+    .map((entry) => (
+      entry.direction === 'across'
+        ? { ...entry, col: entry.col + entry.word.length - 1 }
+        : entry
+    ));
 
   const startMap = new Map();
   trimmed.entries.forEach((entry) => {
@@ -424,16 +426,18 @@ function renderCrossword() {
   elements.crosswordGrid.style.gridTemplateColumns = `repeat(${puzzle.cols}, 34px)`;
   elements.crosswordGrid.innerHTML = '';
   const cellMap = new Map();
-  puzzle.entries.forEach((entry) => {
-    entry.word.split('').forEach((letter, index) => {
-      const row = entry.row + (entry.direction === 'down' ? index : 0);
-      const col = entry.direction === 'across' ? entry.col - index : entry.col;
-      cellMap.set(`${row}:${col}`, {
-        letter,
-        number: index === 0 ? entry.number : null
+  puzzle.entries
+    .filter((entry) => entry && entry.word && Number.isInteger(entry.number) && (entry.direction === 'across' || entry.direction === 'down'))
+    .forEach((entry) => {
+      entry.word.split('').forEach((letter, index) => {
+        const row = entry.row + (entry.direction === 'down' ? index : 0);
+        const col = entry.direction === 'across' ? entry.col - index : entry.col;
+        cellMap.set(`${row}:${col}`, {
+          letter,
+          number: index === 0 ? entry.number : null
+        });
       });
     });
-  });
 
   for (let row = 0; row < puzzle.rows; row += 1) {
     for (let col = 0; col < puzzle.cols; col += 1) {
@@ -465,8 +469,16 @@ function renderCrossword() {
     }
   }
 
-  const across = puzzle.entries.filter((entry) => entry.direction === 'across').sort((a,b) => a.number - b.number);
-  const down = puzzle.entries.filter((entry) => entry.direction === 'down').sort((a,b) => a.number - b.number);
+  const validEntries = puzzle.entries.filter((entry) =>
+    entry &&
+    entry.word &&
+    entry.clue &&
+    Number.isInteger(entry.number) &&
+    (entry.direction === 'across' || entry.direction === 'down')
+  );
+
+  const across = validEntries.filter((entry) => entry.direction === 'across').sort((a, b) => a.number - b.number);
+  const down = validEntries.filter((entry) => entry.direction === 'down').sort((a, b) => a.number - b.number);
   elements.crosswordAcross.innerHTML = '';
   elements.crosswordDown.innerHTML = '';
   across.forEach((entry) => {
