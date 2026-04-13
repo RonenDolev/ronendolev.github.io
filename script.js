@@ -387,7 +387,7 @@ function buildCrossword(entries) {
 
   trimmed.entries = trimmed.entries.map((entry) => (
     entry.direction === 'across'
-      ? { ...entry, col: entry.col + entry.answer.length - 1 }
+      ? { ...entry, col: entry.col + entry.word.length - 1 }
       : entry
   ));
 
