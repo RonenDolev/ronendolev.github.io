@@ -428,18 +428,36 @@ function renderCrossword() {
   if (!puzzle) return;
   elements.crosswordRenderTitle.textContent = title || 'תשחץ';
   elements.crosswordPrintTitle.textContent = title || 'תשחץ';
+
+  if (elements.toggleCrosswordBtn) {
+    elements.toggleCrosswordBtn.textContent = showSolution ? 'הסתר פתרון' : 'הצג פתרון';
+  }
+
   elements.crosswordGrid.style.gridTemplateColumns = `repeat(${puzzle.cols}, 34px)`;
   elements.crosswordGrid.innerHTML = '';
   const cellMap = new Map();
   puzzle.entries
     .filter((entry) => entry && entry.word && Number.isInteger(entry.number) && (entry.direction === 'across' || entry.direction === 'down'))
     .forEach((entry) => {
-      entry.word.split('').forEach((letter, index) => {
-        const row = entry.row + (entry.direction === 'down' ? index : 0);
-        const col = entry.direction === 'across' ? entry.startCol - index : entry.col;
-        const key = `${row}:${col}`;
+      const orderedCells =
+        Array.isArray(entry.cells) && entry.cells.length
+          ? [...entry.cells].sort((a, b) => (
+              entry.direction === 'across'
+                ? b.col - a.col
+                : a.row - b.row
+            ))
+          : [...entry.word].map((_, index) => ({
+              row: entry.row + (entry.direction === 'down' ? index : 0),
+              col: entry.direction === 'across' ? entry.startCol - index : entry.col
+            }));
+
+      [...entry.word].forEach((letter, index) => {
+        const cell = orderedCells[index];
+        if (!cell) return;
+
+        const key = ${cell.row}:;
         const existing = cellMap.get(key);
-        const nextNumber = ((entry.direction === 'across' ? index === entry.word.length - 1 : index === 0) ? entry.number : null);
+        const nextNumber = (index === 0 ? entry.number : null);
 
         cellMap.set(key, {
           letter: existing?.letter ?? letter,
