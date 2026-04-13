@@ -387,15 +387,20 @@ function buildCrossword(entries) {
 
   trimmed.entries = trimmed.entries
     .filter((entry) => entry && entry.word && entry.clue && (entry.direction === 'across' || entry.direction === 'down'))
-    .map((entry) => (
-      entry.direction === 'across'
-        ? { ...entry, col: entry.col + entry.word.length - 1 }
-        : entry
-    ));
+    .map((entry) => ({
+      ...entry,
+      startCol: entry.direction === 'across'
+        ? (
+            Array.isArray(entry.cells) && entry.cells.length
+              ? Math.max(...entry.cells.map((cell) => cell.col))
+              : entry.col + entry.word.length - 1
+          )
+        : entry.col
+    }));
 
   const startMap = new Map();
   trimmed.entries.forEach((entry) => {
-    const key = `${entry.row}:${entry.col}`;
+    const key = `${entry.row}:${entry.startCol}`;
     if (!startMap.has(key)) startMap.set(key, []);
     startMap.get(key).push(entry);
   });
@@ -413,7 +418,7 @@ function buildCrossword(entries) {
   }
 
   trimmed.entries.forEach((entry) => {
-    entry.number = numbers.get(`${entry.row}:${entry.col}`);
+    entry.number = numbers.get(`${entry.row}:${entry.startCol}`);
   });
 
   return { grid: trimmed.grid, entries: trimmed.entries, rows: trimmed.grid.length, cols: trimmed.grid[0].length };
@@ -431,10 +436,10 @@ function renderCrossword() {
     .forEach((entry) => {
       entry.word.split('').forEach((letter, index) => {
         const row = entry.row + (entry.direction === 'down' ? index : 0);
-        const col = entry.direction === 'across' ? entry.col - index : entry.col;
+        const col = entry.direction === 'across' ? entry.startCol - index : entry.col;
         cellMap.set(`${row}:${col}`, {
           letter,
-          number: index === 0 ? entry.number : null
+          number: ((entry.direction === 'across' ? index === entry.word.length - 1 : index === 0) ? entry.number : null)
         });
       });
     });
