@@ -1,4 +1,4 @@
-﻿
+
 const WORD_SEARCH_SIZE = 15;
 const CROSSWORD_SIZE = 19;
 const HEBREW_ALPHABET = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל','מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'];
