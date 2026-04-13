@@ -385,6 +385,12 @@ function buildCrossword(entries) {
   if (!best || !best.placed.length) return null;
   const trimmed = trimCrossword(best.grid, best.placed);
 
+  trimmed.entries = trimmed.entries.map((entry) => (
+    entry.direction === 'across'
+      ? { ...entry, col: entry.col + entry.answer.length - 1 }
+      : entry
+  ));
+
   const startMap = new Map();
   trimmed.entries.forEach((entry) => {
     const key = `${entry.row}:${entry.col}`;
@@ -418,12 +424,16 @@ function renderCrossword() {
   elements.crosswordGrid.style.gridTemplateColumns = `repeat(${puzzle.cols}, 34px)`;
   elements.crosswordGrid.innerHTML = '';
   const cellMap = new Map();
-  puzzle.entries.forEach((entry) => entry.cells.forEach((cell, index) => {
-    cellMap.set(`${cell.row}:${cell.col}`, {
-      letter: entry.word[index],
-      number: index === 0 ? entry.number : null
+  puzzle.entries.forEach((entry) => {
+    entry.word.split('').forEach((letter, index) => {
+      const row = entry.row + (entry.direction === 'down' ? index : 0);
+      const col = entry.direction === 'across' ? entry.col - index : entry.col;
+      cellMap.set(`${row}:${col}`, {
+        letter,
+        number: index === 0 ? entry.number : null
+      });
     });
-  }));
+  });
 
   for (let row = 0; row < puzzle.rows; row += 1) {
     for (let col = 0; col < puzzle.cols; col += 1) {
