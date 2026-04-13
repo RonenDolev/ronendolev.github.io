@@ -1923,23 +1923,7 @@ bindBackHomeButtonGlobal('backHomeGeoQuizBtn');
 
 /* HOME BACK BUTTON ENHANCER */
 function enhanceBackHomeButtons() {
-  document.querySelectorAll('button[id^="backHome"][id$="Btn"]').forEach((btn) => {
-    btn.type = 'button';
-    btn.classList.add('home-back-btn');
-    btn.setAttribute('aria-label', 'חזרה לדף הבית');
-    btn.innerHTML = '<span class="home-back-icon" aria-hidden="true">⌂</span><span>חזרה לדף הבית</span>';
-
-    const section = btn.closest('section.content-section');
-    const sectionTitle = section?.querySelector(':scope > h2');
-
-    if (section && sectionTitle && btn.previousElementSibling !== sectionTitle) {
-      sectionTitle.insertAdjacentElement('afterend', btn);
-    } else if (section && !sectionTitle && btn.parentElement !== section) {
-      section.prepend(btn);
-    }
-
-    btn.dataset.homeEnhanced = '1';
-  });
+  return;
 }
 
 if (document.readyState === 'loading') {

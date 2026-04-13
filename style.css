@@ -627,31 +627,7 @@ button.word-chip {
 
 
 
-.home-back-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  margin: 10px 0 18px !important;
-  padding: 10px 18px !important;
-  border: 2px solid #1d4ed8 !important;
-  border-radius: 999px !important;
-  background: transparent !important;
-  color: #1d4ed8 !important;
-  font-weight: 800 !important;
-  box-shadow: none !important;
-  align-self: flex-start !important;
-}
-
+.home-back-btn {}
 .home-back-btn:hover,
-.home-back-btn:focus-visible {
-  background: rgba(29, 78, 216, 0.08) !important;
-  color: #1e3a8a !important;
-  border-color: #1e3a8a !important;
-  transform: translateY(-1px);
-}
-
-.home-back-btn .home-back-icon {
-  font-size: 17px;
-  line-height: 1;
-}
+.home-back-btn:focus-visible {}
+.home-back-btn .home-back-icon {}
