@@ -443,21 +443,25 @@ function renderCrossword() {
         Array.isArray(entry.cells) && entry.cells.length
           ? [...entry.cells].sort((a, b) => (
               entry.direction === 'across'
-                ? b.col - a.col
+                ? a.col - b.col
                 : a.row - b.row
             ))
           : [...entry.word].map((_, index) => ({
               row: entry.row + (entry.direction === 'down' ? index : 0),
-              col: entry.direction === 'across' ? entry.startCol - index : entry.col
+              col: entry.direction === 'across' ? (entry.startCol - (entry.word.length - 1)) + index : entry.col
             }));
 
-      [...entry.word].forEach((letter, index) => {
+            const letters = entry.direction === 'across'
+        ? [...entry.word].reverse()
+        : [...entry.word];
+
+      letters.forEach((letter, index) => {
         const cell = orderedCells[index];
         if (!cell) return;
 
-        const key = ${cell.row}:;
+        const key = `${cell.row}:${cell.col}`;
         const existing = cellMap.get(key);
-        const nextNumber = (index === 0 ? entry.number : null);
+        const nextNumber = ((entry.direction === 'across' ? index === letters.length - 1 : index === 0) ? entry.number : null);
 
         cellMap.set(key, {
           letter: existing?.letter ?? letter,
