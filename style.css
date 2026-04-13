@@ -159,7 +159,33 @@ h4 { margin: 0 0 10px; font-size: 20px; }
 }
 .crossword-cell.solution-visible input { color: #1d4ed8; }
 .clue-columns { display: grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap: 24px; }
-.clue-columns ol { margin: 0; padding-right: 20px; line-height: 1.9; }
+.clue-columns ol {
+  margin: 0;
+  padding-right: 0;
+  list-style: none;
+  line-height: 1.9;
+}
+
+.crossword-clue-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 8px;
+  direction: rtl;
+  text-align: right;
+}
+
+.crossword-clue-number {
+  font-weight: 800;
+  color: #0f172a;
+  min-width: 28px;
+  text-align: left;
+}
+
+.crossword-clue-text {
+  flex: 1;
+}
 
 .secret-key { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
 .key-chip {

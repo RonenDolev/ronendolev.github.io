@@ -461,14 +461,14 @@ function renderCrossword() {
   elements.crosswordDown.innerHTML = '';
   across.forEach((entry) => {
     const li = document.createElement('li');
-    li.value = entry.number;
-    li.textContent = entry.clue;
+    li.className = 'crossword-clue-item';
+    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
     elements.crosswordAcross.appendChild(li);
   });
   down.forEach((entry) => {
     const li = document.createElement('li');
-    li.value = entry.number;
-    li.textContent = entry.clue;
+    li.className = 'crossword-clue-item';
+    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
     elements.crosswordDown.appendChild(li);
   });
 }
