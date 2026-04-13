@@ -628,12 +628,48 @@ button.word-chip {
 
 
 
-.home-back-btn {}
-.home-back-btn:hover,
-.home-back-btn:focus-visible {}
-.home-back-btn .home-back-icon {}
+.home-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 14px 0;
+  padding: 8px 14px;
+  border: 1.5px solid #2563eb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2563eb;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 400 !important;
+  line-height: 1.2;
+  box-shadow: none;
+  cursor: pointer;
+  direction: rtl;
+  unicode-bidi: isolate;
+  align-self: flex-start;
+}
 
-/* HOME BUTTON TYPOGRAPHY NORMALIZATION */
+.home-back-btn:hover,
+.home-back-btn:focus-visible {
+  background: #f8fbff;
+  color: #2563eb;
+  border-color: #2563eb;
+  outline: none;
+}
+
+.home-back-btn .home-back-icon {
+  font-family: inherit !important;
+  font-size: 14px;
+  font-weight: 400 !important;
+  line-height: 1;
+}
+
+.home-back-btn .home-back-label {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 400 !important;
+}/* HOME BUTTON TYPOGRAPHY NORMALIZATION */
 .home-back-btn,
 .home-back-btn span,
 .home-back-btn .home-back-icon {
