@@ -437,9 +437,13 @@ function renderCrossword() {
       entry.word.split('').forEach((letter, index) => {
         const row = entry.row + (entry.direction === 'down' ? index : 0);
         const col = entry.direction === 'across' ? entry.startCol - index : entry.col;
-        cellMap.set(`${row}:${col}`, {
-          letter,
-          number: ((entry.direction === 'across' ? index === entry.word.length - 1 : index === 0) ? entry.number : null)
+        const key = `${row}:${col}`;
+        const existing = cellMap.get(key);
+        const nextNumber = ((entry.direction === 'across' ? index === entry.word.length - 1 : index === 0) ? entry.number : null);
+
+        cellMap.set(key, {
+          letter: existing?.letter ?? letter,
+          number: Number.isInteger(existing?.number) ? existing.number : nextNumber
         });
       });
     });
