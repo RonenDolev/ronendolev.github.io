@@ -676,3 +676,40 @@ button.word-chip {
   font-family: inherit !important;
   font-weight: 400 !important;
 }
+/* STEP 6: Crossword Hebrew RTL hardening */
+#crosswordSection,
+#crosswordAcross,
+#crosswordDown,
+#crosswordAcross li,
+#crosswordDown li,
+.crossword-clue-item,
+.crossword-clue-text {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: plaintext;
+}
+
+#crosswordAcross,
+#crosswordDown {
+  padding-right: 1.25rem;
+  padding-left: 0;
+}
+
+.crossword-clue-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.crossword-clue-text {
+  flex: 1 1 auto;
+}
+
+.crossword-clue-number {
+  direction: ltr;
+  unicode-bidi: isolate;
+  min-width: 2ch;
+  text-align: left;
+}

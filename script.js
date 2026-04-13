@@ -1,4 +1,4 @@
-
+﻿
 const WORD_SEARCH_SIZE = 15;
 const CROSSWORD_SIZE = 19;
 const HEBREW_ALPHABET = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל','מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'];
@@ -347,7 +347,7 @@ function trimCrossword(grid, entries) {
   }));
   return { grid: trimmed, entries: translatedEntries };
 }
-function buildCrossword(entries) {
+function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
   const normalized = shuffle(entries.map((entry) => ({
     word: cleanHebrewWord(entry.word),
     clue: String(entry.clue || '').trim()
@@ -373,6 +373,10 @@ function buildCrossword(entries) {
           for (const direction of shuffle(CROSSWORD_DIRECTIONS)) {
             if (!canPlaceCrosswordWord(grid, entry.word, row, col, direction, true)) continue;
             placed.push(placeCrosswordWord(grid, entry.word, row, col, direction, entry.clue));
+            if (placed.length >= targetCount) {
+              done = true;
+              break;
+            }
             done = true;
             break;
           }
@@ -422,6 +426,46 @@ function buildCrossword(entries) {
   });
 
   return { grid: trimmed.grid, entries: trimmed.entries, rows: trimmed.grid.length, cols: trimmed.grid[0].length };
+}
+function normalizeCrosswordEntries(entries) {
+  const seen = new Set();
+  return (entries || [])
+    .map((entry) => ({
+      word: cleanHebrewWord(entry.word),
+      clue: String(entry.clue || '').trim()
+    }))
+    .filter((entry) => entry.word.length >= 2 && entry.word.length <= CROSSWORD_SIZE && entry.clue)
+    .filter((entry) => {
+      const key = `${entry.word}::${entry.clue}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+async function buildBestCrosswordFromApi(payload, requestedCount, maxAttempts = 6) {
+  let best = null;
+  const poolCount = Math.max(requestedCount + 12, requestedCount);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const data = await fetchJson('/api/crossword-topic', { ...payload, count: poolCount });
+    const entries = normalizeCrosswordEntries(data.entries || []);
+    const puzzle = buildCrossword(entries, requestedCount);
+
+    if (puzzle && (!best || puzzle.entries.length > best.puzzle.entries.length)) {
+      best = { data, entries, puzzle, attempt };
+    }
+
+    if (best && best.puzzle.entries.length >= requestedCount) {
+      break;
+    }
+  }
+
+  if (!best || !best.puzzle) {
+    throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
+  }
+
+  return best;
 }
 function renderCrossword() {
   const { title, puzzle, showSolution } = state.crossword;
@@ -527,20 +571,39 @@ function renderCrossword() {
 }
 elements.generateCrosswordBtn.addEventListener('click', async () => {
   try {
-    setMessage(elements.crosswordMessage, 'יוצר תשחץ…');
-    const data = await fetchJson('/api/crossword-topic', {
+    const requestedCount = Number(elements.crosswordCount.value) || 12;
+    const payload = {
       topic: elements.crosswordTopic.value.trim(),
-      count: Number(elements.crosswordCount.value),
       ageGroup: elements.crosswordAge.value
-    });
-    const puzzle = buildCrossword(data.entries || []);
-    if (!puzzle) throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
+    };
+
+    setMessage(elements.crosswordMessage, `יוצר תשחץ עם יעד של ${requestedCount} מילים…`);
+
+    const result = await buildBestCrosswordFromApi(
+      payload,
+      requestedCount,
+      requestedCount >= 18 ? 8 : 6
+    );
+
+    const { data, entries, puzzle } = result;
+
     state.crossword.title = elements.crosswordTitle.value.trim() || data.title || 'תשחץ';
-    state.crossword.entries = data.entries || [];
+    state.crossword.entries = entries;
     state.crossword.puzzle = puzzle;
     state.crossword.showSolution = false;
+
     renderCrossword();
-    setMessage(elements.crosswordMessage, `שובצו ${puzzle.entries.length} מילים בתשחץ.`, 'success');
+
+    const placedCount = puzzle.entries.length;
+    const message = placedCount >= requestedCount
+      ? `נוצר תשחץ עם ${placedCount} מילים מתוך ${requestedCount} שביקשת.`
+      : `נוצר תשחץ חלקי: שובצו ${placedCount} מתוך ${requestedCount} מילים. נסה שוב או בחר נושא רחב יותר.`;
+
+    setMessage(
+      elements.crosswordMessage,
+      message,
+      placedCount >= requestedCount ? 'success' : 'info'
+    );
   } catch (error) {
     setMessage(elements.crosswordMessage, error.message, 'error');
   }
