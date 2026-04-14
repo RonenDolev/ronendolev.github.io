@@ -467,6 +467,46 @@ async function buildBestCrosswordFromApi(payload, requestedCount, maxAttempts = 
 
   return best;
 }
+function normalizeCrosswordEntries(entries) {
+  const seen = new Set();
+  return (entries || [])
+    .map((entry) => ({
+      word: cleanHebrewWord(entry.word),
+      clue: String(entry.clue || '').trim()
+    }))
+    .filter((entry) => entry.word.length >= 2 && entry.word.length <= CROSSWORD_SIZE && entry.clue)
+    .filter((entry) => {
+      const key = `${entry.word}::${entry.clue}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+async function buildBestCrosswordFromApi(payload, requestedCount, maxAttempts = 6) {
+  let best = null;
+  const poolCount = Math.max(requestedCount + 12, requestedCount);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const data = await fetchJson('/api/crossword-topic', { ...payload, count: poolCount });
+    const entries = normalizeCrosswordEntries(data.entries || []);
+    const puzzle = buildCrossword(entries, requestedCount);
+
+    if (puzzle && (!best || puzzle.entries.length > best.puzzle.entries.length)) {
+      best = { data, entries, puzzle, attempt };
+    }
+
+    if (best && best.puzzle.entries.length >= requestedCount) {
+      break;
+    }
+  }
+
+  if (!best || !best.puzzle) {
+    throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
+  }
+
+  return best;
+}
 function renderCrossword() {
   const { title, puzzle, showSolution } = state.crossword;
   if (!puzzle) return;
