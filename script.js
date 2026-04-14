@@ -7,7 +7,7 @@ const WORD_SEARCH_DIRECTIONS = [
   { row: 1, col: 1 }, { row: 1, col: -1 }, { row: -1, col: 1 }, { row: -1, col: -1 }
 ];
 const CROSSWORD_DIRECTIONS = [
-  { key: 'across', row: 0, col: -1 },   // right to left
+  { key: 'across', row: 0, col: 1 },    // right to left (col+1 in data = right→left in RTL CSS grid)
   { key: 'down', row: 1, col: 0 }       // top to bottom
 ];
 const SECRET_SYMBOL_POOL = ['★','●','▲','■','◆','♥','♣','♠','☀','☁','☂','☘','✿','✦','☾','☺','⚑','⚙','⌂','✈','♫','☕','⚓','✸','✪','✚','✖','☯','☮','✽','⬟','⬢','⬣'];
@@ -347,7 +347,7 @@ function trimCrossword(grid, entries) {
   }));
   return { grid: trimmed, entries: translatedEntries };
 }
-function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
+function buildCrossword(entries) {
   const normalized = shuffle(entries.map((entry) => ({
     word: cleanHebrewWord(entry.word),
     clue: String(entry.clue || '').trim()
@@ -363,7 +363,7 @@ function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
     const placed = [];
     const first = shuffled[0];
     const firstRow = Math.floor(CROSSWORD_SIZE / 2);
-    const firstCol = Math.floor(CROSSWORD_SIZE / 2) + Math.floor(first.word.length / 2);
+    const firstCol = Math.floor(CROSSWORD_SIZE / 2) - Math.floor(first.word.length / 2);
     placed.push(placeCrosswordWord(grid, first.word, firstRow, firstCol, CROSSWORD_DIRECTIONS[0], first.clue));
 
     for (const entry of shuffled.slice(1)) {
@@ -373,10 +373,6 @@ function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
           for (const direction of shuffle(CROSSWORD_DIRECTIONS)) {
             if (!canPlaceCrosswordWord(grid, entry.word, row, col, direction, true)) continue;
             placed.push(placeCrosswordWord(grid, entry.word, row, col, direction, entry.clue));
-            if (placed.length >= targetCount) {
-              done = true;
-              break;
-            }
             done = true;
             break;
           }
@@ -396,8 +392,8 @@ function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
       startCol: entry.direction === 'across'
         ? (
             Array.isArray(entry.cells) && entry.cells.length
-              ? Math.max(...entry.cells.map((cell) => cell.col))
-              : entry.col + entry.word.length - 1
+              ? Math.min(...entry.cells.map((cell) => cell.col))
+              : entry.col
           )
         : entry.col
     }));
@@ -413,7 +409,7 @@ function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
   let current = 1;
 
   for (let row = 0; row < trimmed.grid.length; row += 1) {
-    for (let col = trimmed.grid[0].length - 1; col >= 0; col -= 1) {
+    for (let col = 0; col < trimmed.grid[0].length; col += 1) {
       const key = `${row}:${col}`;
       if (startMap.has(key) && !numbers.has(key)) {
         numbers.set(key, current++);
@@ -426,86 +422,6 @@ function buildCrossword(entries, targetCount = Number.POSITIVE_INFINITY) {
   });
 
   return { grid: trimmed.grid, entries: trimmed.entries, rows: trimmed.grid.length, cols: trimmed.grid[0].length };
-}
-function normalizeCrosswordEntries(entries) {
-  const seen = new Set();
-  return (entries || [])
-    .map((entry) => ({
-      word: cleanHebrewWord(entry.word),
-      clue: String(entry.clue || '').trim()
-    }))
-    .filter((entry) => entry.word.length >= 2 && entry.word.length <= CROSSWORD_SIZE && entry.clue)
-    .filter((entry) => {
-      const key = `${entry.word}::${entry.clue}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-}
-
-async function buildBestCrosswordFromApi(payload, requestedCount, maxAttempts = 6) {
-  let best = null;
-  const poolCount = Math.max(requestedCount + 12, requestedCount);
-
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const data = await fetchJson('/api/crossword-topic', { ...payload, count: poolCount });
-    const entries = normalizeCrosswordEntries(data.entries || []);
-    const puzzle = buildCrossword(entries, requestedCount);
-
-    if (puzzle && (!best || puzzle.entries.length > best.puzzle.entries.length)) {
-      best = { data, entries, puzzle, attempt };
-    }
-
-    if (best && best.puzzle.entries.length >= requestedCount) {
-      break;
-    }
-  }
-
-  if (!best || !best.puzzle) {
-    throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
-  }
-
-  return best;
-}
-function normalizeCrosswordEntries(entries) {
-  const seen = new Set();
-  return (entries || [])
-    .map((entry) => ({
-      word: cleanHebrewWord(entry.word),
-      clue: String(entry.clue || '').trim()
-    }))
-    .filter((entry) => entry.word.length >= 2 && entry.word.length <= CROSSWORD_SIZE && entry.clue)
-    .filter((entry) => {
-      const key = `${entry.word}::${entry.clue}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-}
-
-async function buildBestCrosswordFromApi(payload, requestedCount, maxAttempts = 6) {
-  let best = null;
-  const poolCount = Math.max(requestedCount + 12, requestedCount);
-
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const data = await fetchJson('/api/crossword-topic', { ...payload, count: poolCount });
-    const entries = normalizeCrosswordEntries(data.entries || []);
-    const puzzle = buildCrossword(entries, requestedCount);
-
-    if (puzzle && (!best || puzzle.entries.length > best.puzzle.entries.length)) {
-      best = { data, entries, puzzle, attempt };
-    }
-
-    if (best && best.puzzle.entries.length >= requestedCount) {
-      break;
-    }
-  }
-
-  if (!best || !best.puzzle) {
-    throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
-  }
-
-  return best;
 }
 function renderCrossword() {
   const { title, puzzle, showSolution } = state.crossword;
@@ -532,12 +448,10 @@ function renderCrossword() {
             ))
           : [...entry.word].map((_, index) => ({
               row: entry.row + (entry.direction === 'down' ? index : 0),
-              col: entry.direction === 'across' ? (entry.startCol - (entry.word.length - 1)) + index : entry.col
+              col: entry.direction === 'across' ? entry.startCol + index : entry.col
             }));
 
-            const letters = entry.direction === 'across'
-        ? [...entry.word].reverse()
-        : [...entry.word];
+            const letters = [...entry.word];
 
       letters.forEach((letter, index) => {
         const cell = orderedCells[index];
@@ -545,7 +459,7 @@ function renderCrossword() {
 
         const key = `${cell.row}:${cell.col}`;
         const existing = cellMap.get(key);
-        const nextNumber = ((entry.direction === 'across' ? index === letters.length - 1 : index === 0) ? entry.number : null);
+        const nextNumber = (index === 0 ? entry.number : null);
 
         cellMap.set(key, {
           letter: existing?.letter ?? letter,
@@ -565,9 +479,6 @@ function renderCrossword() {
         if (showSolution) cell.classList.add('solution-visible');
         const input = document.createElement('input');
         input.maxLength = 1;
-        input.setAttribute('dir', 'rtl');
-        input.setAttribute('lang', 'he');
-        input.inputMode = 'text';
         input.dataset.answer = data.letter;
         input.dataset.position = `${row}:${col}`;
         input.value = showSolution ? data.letter : (input.value || '');
@@ -602,55 +513,32 @@ function renderCrossword() {
   across.forEach((entry) => {
     const li = document.createElement('li');
     li.className = 'crossword-clue-item';
-    li.setAttribute('dir', 'rtl');
-    li.setAttribute('lang', 'he');
-    li.innerHTML = `<span class="crossword-clue-number" dir="ltr">${entry.number}.</span><span class="crossword-clue-text" dir="rtl" lang="he">${entry.clue}</span>`;
+    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
     elements.crosswordAcross.appendChild(li);
   });
   down.forEach((entry) => {
     const li = document.createElement('li');
     li.className = 'crossword-clue-item';
-    li.setAttribute('dir', 'rtl');
-    li.setAttribute('lang', 'he');
-    li.innerHTML = `<span class="crossword-clue-number" dir="ltr">${entry.number}.</span><span class="crossword-clue-text" dir="rtl" lang="he">${entry.clue}</span>`;
+    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
     elements.crosswordDown.appendChild(li);
   });
 }
 elements.generateCrosswordBtn.addEventListener('click', async () => {
   try {
-    const requestedCount = Number(elements.crosswordCount.value) || 12;
-    const payload = {
+    setMessage(elements.crosswordMessage, 'יוצר תשחץ…');
+    const data = await fetchJson('/api/crossword-topic', {
       topic: elements.crosswordTopic.value.trim(),
+      count: Number(elements.crosswordCount.value),
       ageGroup: elements.crosswordAge.value
-    };
-
-    setMessage(elements.crosswordMessage, `יוצר תשחץ עם יעד של ${requestedCount} מילים…`);
-
-    const result = await buildBestCrosswordFromApi(
-      payload,
-      requestedCount,
-      requestedCount >= 18 ? 8 : 6
-    );
-
-    const { data, entries, puzzle } = result;
-
+    });
+    const puzzle = buildCrossword(data.entries || []);
+    if (!puzzle) throw new Error('לא ניתן היה לבנות תשחץ מהמילים שהתקבלו.');
     state.crossword.title = elements.crosswordTitle.value.trim() || data.title || 'תשחץ';
-    state.crossword.entries = entries;
+    state.crossword.entries = data.entries || [];
     state.crossword.puzzle = puzzle;
     state.crossword.showSolution = false;
-
     renderCrossword();
-
-    const placedCount = puzzle.entries.length;
-    const message = placedCount >= requestedCount
-      ? `נוצר תשחץ עם ${placedCount} מילים מתוך ${requestedCount} שביקשת.`
-      : `נוצר תשחץ חלקי: שובצו ${placedCount} מתוך ${requestedCount} מילים. נסה שוב או בחר נושא רחב יותר.`;
-
-    setMessage(
-      elements.crosswordMessage,
-      message,
-      placedCount >= requestedCount ? 'success' : 'info'
-    );
+    setMessage(elements.crosswordMessage, `שובצו ${puzzle.entries.length} מילים בתשחץ.`, 'success');
   } catch (error) {
     setMessage(elements.crosswordMessage, error.message, 'error');
   }

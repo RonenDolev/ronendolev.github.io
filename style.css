@@ -150,12 +150,12 @@ h4 { margin: 0 0 10px; font-size: 20px; }
 .crossword-number {
   position: absolute;
   top: 2px;
-  right: 3px;
-  left: auto;
+  left: 3px;
+  right: auto;
   font-size: 10px;
   font-weight: 700;
   color: #111827;
-  text-align: right;
+  text-align: left;
   direction: ltr;
   unicode-bidi: isolate;
 }
@@ -675,89 +675,4 @@ button.word-chip {
 .home-back-btn .home-back-icon {
   font-family: inherit !important;
   font-weight: 400 !important;
-}
-/* STEP 6: Crossword Hebrew RTL hardening */
-#crosswordSection,
-#crosswordAcross,
-#crosswordDown,
-#crosswordAcross li,
-#crosswordDown li,
-.crossword-clue-item,
-.crossword-clue-text {
-  direction: rtl;
-  text-align: right;
-  unicode-bidi: plaintext;
-}
-
-#crosswordAcross,
-#crosswordDown {
-  padding-right: 1.25rem;
-  padding-left: 0;
-}
-
-.crossword-clue-item {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.crossword-clue-text {
-  flex: 1 1 auto;
-}
-
-.crossword-clue-number {
-  direction: ltr;
-  unicode-bidi: isolate;
-  min-width: 2ch;
-  text-align: left;
-}
-/* STEP 8: Crossword Hebrew natural flow override */
-.clue-columns {
-  direction: rtl;
-}
-
-.clue-columns > div,
-.clue-columns h3,
-#crosswordAcross,
-#crosswordDown,
-#crosswordAcross li,
-#crosswordDown li {
-  direction: rtl;
-  text-align: right;
-}
-
-.crossword-clue-item {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: flex-start !important;
-  align-items: flex-start;
-  gap: 8px;
-  direction: rtl;
-  text-align: right;
-  unicode-bidi: plaintext;
-}
-
-.crossword-clue-number {
-  flex: 0 0 auto;
-  order: 0;
-  margin: 0;
-  direction: ltr;
-  unicode-bidi: isolate;
-  text-align: right;
-}
-
-.crossword-clue-text {
-  flex: 1 1 auto;
-  order: 1;
-  direction: rtl;
-  unicode-bidi: plaintext;
-  text-align: right;
-}
-
-.crossword-cell input {
-  direction: rtl;
-  text-align: center;
-  unicode-bidi: plaintext;
 }
