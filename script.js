@@ -1,6 +1,6 @@
 ﻿
 const WORD_SEARCH_SIZE = 15;
-const CROSSWORD_SIZE = 19;
+const CROSSWORD_SIZE = 21;
 const HEBREW_ALPHABET = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל','מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'];
 const WORD_SEARCH_DIRECTIONS = [
   { row: 0, col: 1 }, { row: 0, col: -1 }, { row: 1, col: 0 }, { row: -1, col: 0 },
@@ -356,8 +356,27 @@ function buildCrossword(entries) {
     .slice(0, 20);
   if (!normalized.length) return null;
 
+  // Collect all positions where `word` can intersect perpendicularly with already-placed words.
+  function intersectionCandidates(grid, word, placed) {
+    const seen = new Set();
+    const candidates = [];
+    for (const p of placed) {
+      const perp = p.direction === 'across' ? CROSSWORD_DIRECTIONS[1] : CROSSWORD_DIRECTIONS[0];
+      for (let pi = 0; pi < p.word.length; pi++) {
+        for (let wi = 0; wi < word.length; wi++) {
+          if (p.word[pi] !== word[wi]) continue;
+          const startRow = p.cells[pi].row - perp.row * wi;
+          const startCol = p.cells[pi].col - perp.col * wi;
+          const key = `${startRow}:${startCol}:${perp.key}`;
+          if (!seen.has(key)) { seen.add(key); candidates.push({ row: startRow, col: startCol, direction: perp }); }
+        }
+      }
+    }
+    return candidates;
+  }
+
   let best = null;
-  for (let attempt = 0; attempt < 12; attempt += 1) {
+  for (let attempt = 0; attempt < 30; attempt += 1) {
     const shuffled = shuffle(normalized);
     const grid = Array.from({ length: CROSSWORD_SIZE }, () => Array(CROSSWORD_SIZE).fill(''));
     const placed = [];
@@ -366,21 +385,34 @@ function buildCrossword(entries) {
     const firstCol = Math.floor(CROSSWORD_SIZE / 2) - Math.floor(first.word.length / 2);
     placed.push(placeCrosswordWord(grid, first.word, firstRow, firstCol, CROSSWORD_DIRECTIONS[0], first.clue));
 
+    // First pass: place each word against all current intersection candidates
+    const unplaced = [];
     for (const entry of shuffled.slice(1)) {
+      const candidates = shuffle(intersectionCandidates(grid, entry.word, placed));
       let done = false;
-      for (let row = 0; row < CROSSWORD_SIZE && !done; row += 1) {
-        for (let col = 0; col < CROSSWORD_SIZE && !done; col += 1) {
-          for (const direction of shuffle(CROSSWORD_DIRECTIONS)) {
-            if (!canPlaceCrosswordWord(grid, entry.word, row, col, direction, true)) continue;
-            placed.push(placeCrosswordWord(grid, entry.word, row, col, direction, entry.clue));
-            done = true;
-            break;
-          }
+      for (const { row, col, direction } of candidates) {
+        if (canPlaceCrosswordWord(grid, entry.word, row, col, direction, true)) {
+          placed.push(placeCrosswordWord(grid, entry.word, row, col, direction, entry.clue));
+          done = true;
+          break;
+        }
+      }
+      if (!done) unplaced.push(entry);
+    }
+
+    // Second pass: retry words that didn't fit — more anchors exist now
+    for (const entry of unplaced) {
+      const candidates = shuffle(intersectionCandidates(grid, entry.word, placed));
+      for (const { row, col, direction } of candidates) {
+        if (canPlaceCrosswordWord(grid, entry.word, row, col, direction, true)) {
+          placed.push(placeCrosswordWord(grid, entry.word, row, col, direction, entry.clue));
+          break;
         }
       }
     }
-    if (!best || placed.length > best.length) best = { placed, grid };
-    if (best.length >= Math.min(8, normalized.length)) break;
+
+    if (!best || placed.length > best.placed.length) best = { placed, grid };
+    if (best.placed.length >= Math.min(15, normalized.length)) break;
   }
   if (!best || !best.placed.length) return null;
   const trimmed = trimCrossword(best.grid, best.placed);
