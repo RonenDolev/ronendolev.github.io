@@ -565,6 +565,9 @@ function renderCrossword() {
         if (showSolution) cell.classList.add('solution-visible');
         const input = document.createElement('input');
         input.maxLength = 1;
+        input.setAttribute('dir', 'rtl');
+        input.setAttribute('lang', 'he');
+        input.inputMode = 'text';
         input.dataset.answer = data.letter;
         input.dataset.position = `${row}:${col}`;
         input.value = showSolution ? data.letter : (input.value || '');
@@ -599,13 +602,17 @@ function renderCrossword() {
   across.forEach((entry) => {
     const li = document.createElement('li');
     li.className = 'crossword-clue-item';
-    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
+    li.setAttribute('dir', 'rtl');
+    li.setAttribute('lang', 'he');
+    li.innerHTML = `<span class="crossword-clue-number" dir="ltr">${entry.number}.</span><span class="crossword-clue-text" dir="rtl" lang="he">${entry.clue}</span>`;
     elements.crosswordAcross.appendChild(li);
   });
   down.forEach((entry) => {
     const li = document.createElement('li');
     li.className = 'crossword-clue-item';
-    li.innerHTML = `<span class="crossword-clue-number">${entry.number}.</span><span class="crossword-clue-text">${entry.clue}</span>`;
+    li.setAttribute('dir', 'rtl');
+    li.setAttribute('lang', 'he');
+    li.innerHTML = `<span class="crossword-clue-number" dir="ltr">${entry.number}.</span><span class="crossword-clue-text" dir="rtl" lang="he">${entry.clue}</span>`;
     elements.crosswordDown.appendChild(li);
   });
 }

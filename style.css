@@ -713,3 +713,51 @@ button.word-chip {
   min-width: 2ch;
   text-align: left;
 }
+/* STEP 8: Crossword Hebrew natural flow override */
+.clue-columns {
+  direction: rtl;
+}
+
+.clue-columns > div,
+.clue-columns h3,
+#crosswordAcross,
+#crosswordDown,
+#crosswordAcross li,
+#crosswordDown li {
+  direction: rtl;
+  text-align: right;
+}
+
+.crossword-clue-item {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: flex-start;
+  gap: 8px;
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: plaintext;
+}
+
+.crossword-clue-number {
+  flex: 0 0 auto;
+  order: 0;
+  margin: 0;
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: right;
+}
+
+.crossword-clue-text {
+  flex: 1 1 auto;
+  order: 1;
+  direction: rtl;
+  unicode-bidi: plaintext;
+  text-align: right;
+}
+
+.crossword-cell input {
+  direction: rtl;
+  text-align: center;
+  unicode-bidi: plaintext;
+}
